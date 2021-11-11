@@ -134,6 +134,14 @@ public class GameManager {
 
     public boolean gameIsOver(){
         if(this.getProgrammers(this.boardSize).size() >= 1){
+            for(Programmer k : this.getProgrammers()){
+                if (k.getPos() != this.boardSize){
+                    k.setEstado("Derrotado");
+                }
+                else{
+                    k.setEstado("Ganhou");
+                }
+            }
             return true;
         }
 

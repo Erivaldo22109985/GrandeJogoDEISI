@@ -48,6 +48,9 @@ public class Programmer implements Comparable{
         return this.pos;
     }
 
+    public void setEstado(String n){
+        this.estado = n;
+    }
     public void setPos(int pos){
         this.pos = pos;
     }
