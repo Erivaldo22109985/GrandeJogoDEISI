@@ -120,7 +120,7 @@ public class GameManager {
         if(x.getPos()+nrPositions < this.boardSize) {
             x.setPos(x.getPos() + nrPositions);
         } else {
-            x.setPos(this.boardSize - x.getPos() + nrPositions - this.boardSize);
+            x.setPos(this.boardSize - (nrPositions - (this.boardSize - x.getPos()) ));
         }
 
         this.currentPlayer++;
