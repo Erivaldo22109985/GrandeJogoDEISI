@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import javax.swing.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GameManager {
 
@@ -68,6 +69,8 @@ public class GameManager {
             this.jogadores.add( new Programmer(id_jogador,nome,cor,lista_linguagens) );
         }
 
+        Collections.sort(this.jogadores);
+
         return true;
     }
 
@@ -105,14 +108,17 @@ public class GameManager {
 
     public boolean moveCurrentPlayer(int nrPositions){
 
-        if(nrPositions < 1 || nrPositions > 6)
+        if(nrPositions < 1 || nrPositions > 6){
             return false;
+        }
+
         Programmer x = this.jogadores.get(this.currentPlayer);
 
-        if(x.getPos()+nrPositions < this.boardSize - 1)
-            x.setPos(x.getPos()+nrPositions);
-        else
-            x.setPos(this.boardSize - x.getPos()+nrPositions - this.boardSize);
+        if(x.getPos()+nrPositions < this.boardSize - 1) {
+            x.setPos(x.getPos() + nrPositions);
+        } else {
+            x.setPos(this.boardSize - x.getPos() + nrPositions - this.boardSize);
+        }
 
         return true;
     }

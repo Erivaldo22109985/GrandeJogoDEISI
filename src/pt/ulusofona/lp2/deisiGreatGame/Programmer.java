@@ -2,7 +2,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import java.util.ArrayList;
 
-public class Programmer {
+public class Programmer implements Comparable{
 
     private int id;
     private String name;
@@ -70,6 +70,9 @@ public class Programmer {
 
         return ret;
     }
+
+
+    @Override
     public String toString(){
         return Integer.toString(this.id) + " | "
                 + this.name + " | " + Integer.toString(this.pos) +
@@ -79,4 +82,8 @@ public class Programmer {
     }
 
 
+    @Override
+    public int compareTo(Object o) {
+        return  this.id - ((Programmer) o).getId() ;
+    }
 }
