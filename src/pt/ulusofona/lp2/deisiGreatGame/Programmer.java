@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Programmer implements Comparable{
 
@@ -31,6 +32,7 @@ public class Programmer implements Comparable{
         }
 
         this.linguagens = linguagens.split(";");
+        Arrays.sort(this.linguagens);
 
         this.pos = 1;
         this.estado = "Em Jogo";

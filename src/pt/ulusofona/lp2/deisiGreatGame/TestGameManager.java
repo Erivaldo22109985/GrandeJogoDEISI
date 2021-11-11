@@ -27,10 +27,9 @@ public class TestGameManager {
     public void setUp() throws Exception {
         this.gm = new GameManager();
 
-        this.list_player_1[0] = createPlayer("10", "Player1", "c;c++;java", "Purple");
+        this.list_player_1[0] = createPlayer("10", "Player1", "D;Common Lisp;Clojure", "Purple");
         this.list_player_1[1] = createPlayer("2", "Player2", "c2;c++2;java3", "Brown");
         this.list_player_1[2] = createPlayer("3", "Player3", "c3;c++3;java3", "Green");
-
 
     }
 
@@ -42,7 +41,7 @@ public class TestGameManager {
     @org.junit.Test
     public void createInitialBoard() {
         assertTrue(this.gm.createInitialBoard(this.list_player_1,12));
-
+        System.out.println(this.gm.getProgrammers().toString());
     }
 
     @org.junit.Test
