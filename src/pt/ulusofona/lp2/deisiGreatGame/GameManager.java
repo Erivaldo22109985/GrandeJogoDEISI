@@ -106,17 +106,6 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID(){
-        System.out.println(System.getProperty("user.dir"));
-        System.out.println("begin-------------");
-        try (BufferedReader br = new BufferedReader(new FileReader("./src/pt/ulusofona/lp2/deisiGreatGame/TestTeacher.java"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (IOException exception) {
-            System.out.println(exception);
-        }
-        System.out.println("End-----------");
         return this.jogadores.get(this.currentPlayer).getId();
     }
 
@@ -133,6 +122,12 @@ public class GameManager {
         } else {
             x.setPos(this.boardSize - x.getPos() + nrPositions - this.boardSize);
         }
+
+        this.currentPlayer++;
+        if(this.currentPlayer>=this.jogadores.size()){
+            this.currentPlayer=0;
+        }
+
 
         return true;
     }
