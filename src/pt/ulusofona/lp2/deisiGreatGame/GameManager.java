@@ -114,7 +114,7 @@ public class GameManager {
 
         Programmer x = this.jogadores.get(this.currentPlayer);
 
-        if(x.getPos()+nrPositions < this.boardSize - 1) {
+        if(x.getPos()+nrPositions < this.boardSize) {
             x.setPos(x.getPos() + nrPositions);
         } else {
             x.setPos(this.boardSize - x.getPos() + nrPositions - this.boardSize);
@@ -124,7 +124,7 @@ public class GameManager {
     }
 
     public boolean gameIsOver(){
-        if(this.getProgrammers(this.boardSize-1).size() >= 1){
+        if(this.getProgrammers(this.boardSize).size() >= 1){
             return true;
         }
 

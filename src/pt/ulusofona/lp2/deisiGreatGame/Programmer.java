@@ -32,7 +32,7 @@ public class Programmer implements Comparable{
 
         this.linguagens = linguagens.split(";");
 
-        this.pos = 0;
+        this.pos = 1;
         this.estado = "Em Jogo";
     }
 
