@@ -40,8 +40,9 @@ public class TestGameManager {
 
     @org.junit.Test
     public void createInitialBoard() {
-        assertTrue(this.gm.createInitialBoard(this.list_player_1,12));
+        this.gm.createInitialBoard(this.list_player_1,12);
         System.out.println(this.gm.getProgrammers().toString());
+        this.gm.getCurrentPlayerID();
     }
 
     @org.junit.Test

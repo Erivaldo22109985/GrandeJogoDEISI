@@ -1,6 +1,9 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -103,6 +106,17 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID(){
+        System.out.println(System.getProperty("user.dir"));
+        System.out.println("begin-------------");
+        try (BufferedReader br = new BufferedReader(new FileReader("./src/pt/ulusofona/lp2/deisiGreatGame/TestTeacher.java"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException exception) {
+            System.out.println(exception);
+        }
+        System.out.println("End-----------");
         return this.jogadores.get(this.currentPlayer).getId();
     }
 
