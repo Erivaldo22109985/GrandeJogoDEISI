@@ -40,16 +40,19 @@ public class TestGameManager {
 
     @org.junit.Test
     public void createInitialBoard() {
-        //this.gm.createInitialBoard(null,12);
-        //assertTrue(this.gm.createInitialBoard(this.list_player_1,12));
-        //System.out.println(this.gm.getProgrammers().toString());
-        //this.gm.getCurrentPlayerID();
+        assertTrue(this.gm.createInitialBoard(this.list_player_1,12));
 
 
     }
 
     @org.junit.Test
     public void moveCurrentPlayer() {
-        System.out.println("moveCurrentPlayer");
+        assertTrue(this.gm.createInitialBoard(this.list_player_1,12));
+
+        assertTrue(this.gm.moveCurrentPlayer(1));
+
+        assertTrue(this.gm.moveCurrentPlayer(3));
+
+        assertEquals(this.gm.getCurrentPlayerID(),10);
     }
 }
