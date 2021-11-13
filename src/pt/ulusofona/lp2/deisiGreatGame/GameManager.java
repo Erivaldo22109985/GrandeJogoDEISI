@@ -125,10 +125,10 @@ public class GameManager {
             x.setPos(this.boardSize - (nrPositions - (this.boardSize - x.getPos()) ));
         }
 
-        this.currentPlayer++;
+        this.currentPlayer++;this.n_turnos++;
         if(this.currentPlayer>=this.jogadores.size()){
             this.currentPlayer=0;
-            this.n_turnos++;
+            
         }
 
 
