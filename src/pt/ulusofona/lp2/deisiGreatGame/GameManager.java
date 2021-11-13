@@ -16,7 +16,6 @@ public class GameManager {
     private int nturnos;
 
     public GameManager(){
-
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize){
