@@ -13,7 +13,7 @@ public class GameManager {
     private ArrayList<Programmer> jogadores;
     private int boardSize;
     private int currentPlayer;
-    private int n_turnos;
+    private int nturnos;
 
     public GameManager(){
 
@@ -34,7 +34,7 @@ public class GameManager {
         this.jogadores = new ArrayList<Programmer>();
         this.boardSize = boardSize;
         this.currentPlayer = 0;
-        this.n_turnos = 1;
+        this.nturnos = 1;
 
         for(int i=0;i<playerInfo.length;i++){
             int id_jogador = Integer.parseInt(playerInfo[i][0]);
@@ -125,7 +125,7 @@ public class GameManager {
             x.setPos(this.boardSize - (nrPositions - (this.boardSize - x.getPos()) ));
         }
 
-        this.currentPlayer++;this.n_turnos++;
+        this.currentPlayer++;this.nturnos++;
         if(this.currentPlayer>=this.jogadores.size()){
             this.currentPlayer=0;
             
@@ -161,7 +161,7 @@ public class GameManager {
         ret.add("O GRANDE JOGO DO DEISI");
         ret.add("");
         ret.add("NR. DE TURNOS");
-        ret.add(Integer.toString(this.n_turnos));
+        ret.add(Integer.toString(this.nturnos));
         ret.add("");
         ret.add("VENCEDOR");
         ret.add(this.getProgrammers(this.boardSize).get(0).getName());
