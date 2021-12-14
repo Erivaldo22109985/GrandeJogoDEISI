@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class GameManager {
 
@@ -14,11 +15,19 @@ public class GameManager {
     private int boardSize;
     private int currentPlayer;
     private int nturnos;
+    private AbyssesAndTools at;
 
     public GameManager(){
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int boardSize){
+    public boolean createInitialBoard(String[][] playerInfo,
+                                      int boardSize){
+        return this.createInitialBoard(playerInfo,boardSize,null);
+    }
+    public boolean createInitialBoard(String[][] playerInfo,
+                                      int boardSize,
+                                      String[][] abyssesAndTools
+                                      ){
         //Verificacao de numero jogadores
         if (playerInfo.length < 2 || playerInfo.length > 4){
             return false;
@@ -73,6 +82,11 @@ public class GameManager {
             this.jogadores.add( new Programmer(id_jogador,nome,cor,lista_linguagens) );
         }
 
+
+        this.at = new AbyssesAndTools();
+        if(this.at.init(abyssesAndTools,boardSize) == false)
+            return false;
+
         Collections.sort(this.jogadores);
 
         return true;
@@ -87,14 +101,32 @@ public class GameManager {
             return "glory.png";
         }
 
-        return null;//Integer.toString(position) + ".png";
+        return this.at.getImagePng(position);
     }
 
-    public ArrayList<Programmer> getProgrammers(){
+    public String getTitle(int position){
+        return this.at.getTitle(position);
+    }
+
+    public List<Programmer> getProgrammers(){
         return this.jogadores;
     }
 
-    public ArrayList<Programmer> getProgrammers(int position){
+    public List<Programmer> getProgrammers(boolean includeDefeated){
+        ArrayList<Programmer> ret = new ArrayList<Programmer>();
+
+        if(includeDefeated == true)
+            return this.getProgrammers();
+
+        for(Programmer x : this.jogadores){
+            if(x.getEstado() != "Derrotado" && x.getEstado() != "BSOD")
+                ret.add(x);
+        }
+
+        return ret;
+    }
+
+    public List<Programmer> getProgrammers(int position){
         ArrayList<Programmer> k = new ArrayList<Programmer>();
 
         for(Programmer x : this.jogadores){
@@ -111,7 +143,7 @@ public class GameManager {
     }
 
     public boolean moveCurrentPlayer(int nrPositions){
-
+        int prox_casa = 0;
         if(nrPositions < 1 || nrPositions > 6){
             return false;
         }
@@ -119,9 +151,15 @@ public class GameManager {
         Programmer x = this.jogadores.get(this.currentPlayer);
 
         if(x.getPos()+nrPositions < this.boardSize) {
-            x.setPos(x.getPos() + nrPositions);
+            prox_casa = x.getPos() + nrPositions;
         } else {
-            x.setPos(this.boardSize - (nrPositions - (this.boardSize - x.getPos()) ));
+            prox_casa = this.boardSize - (nrPositions - (this.boardSize - x.getPos()) );
+        }
+
+        if(this.at.isAbysse(prox_casa) == true){
+            prox_casa = this.playAbysse(prox_casa,x);
+        }else if(this.at.isTool(prox_casa) == true){
+            x.setActiveTool(Tools.values()[at.getATPosition(prox_casa)[1]]);
         }
 
         this.currentPlayer++;this.nturnos++;
@@ -132,6 +170,154 @@ public class GameManager {
 
 
         return true;
+    }
+
+    private int countPlayersSamePlace(int pos){
+        int n = 0;
+        for(Programmer x: this.getProgrammers()){
+            if(x.getPos() == pos)
+                n++;
+        }
+
+        return n;
+    }
+
+    private void updatePlayersState(String estado, int pos){
+        int n = 0;
+        for(Programmer x: this.getProgrammers()){
+            if(x.getPos() == pos)
+                x.setEstado(estado);
+        }
+
+    }
+
+    private void updatePlayersPlace(int pos, int n_casas){
+
+        for(Programmer x: this.getProgrammers()){
+            if(x.getPos() == pos)
+            {
+                x.setPos(pos + n_casas);
+            }
+        }
+
+    }
+
+    public int playAbysse(int new_pos, Programmer x){
+        int at_pos = x.getPos();
+        int ant_pos = x.getPos_ant();
+        int numDado = new_pos - at_pos;
+        int count_players_same_place = this.countPlayersSamePlace(at_pos);
+        int count_players_new_place = this.countPlayersSamePlace(new_pos);
+
+        //no caso de nao estar em jogo
+        if(at_pos <= 0 || x.getEstado().equals("Blocked") == true)
+            return at_pos;
+
+
+        //posicao nova
+        switch(Abysses.values()[at.getATPosition(new_pos)[1]]){
+            case sintax:
+
+                switch(x.getActiveTool()){
+                    case ajuda_professor:
+                    case functional:
+                        return new_pos;
+                }
+
+                return new_pos - 1;
+            case logic:
+
+                switch(x.getActiveTool()){
+                    case ajuda_professor:
+                        return new_pos;
+                }
+
+                return new_pos - numDado/2;
+            case exception:
+
+                switch(x.getActiveTool()){
+                    case IDE:
+                    case ajuda_professor:
+                        return new_pos;
+                }
+
+                return new_pos - 2;
+            case file_not_found_exception:
+
+                switch(x.getActiveTool()){
+                    case ajuda_professor:
+                        return new_pos;
+                }
+
+
+                return new_pos - 3;
+            case crash:
+
+                switch(x.getActiveTool()){
+                    case functional:
+                        return new_pos;
+                }
+
+                return 1;
+            case duplicated_code:
+
+                switch(x.getActiveTool()){
+                    case IDE:
+                        return new_pos;
+                }
+
+                return at_pos;
+            case secondary_effects:
+
+                switch(x.getActiveTool()){
+                    case unit_tests:
+                        return new_pos;
+                }
+
+                return ant_pos;
+            case bsod:
+
+                switch(x.getActiveTool()){
+                    case catch0:
+                        return new_pos;
+                }
+
+                x.setEstado("BSOD");
+
+                return 0;
+            case infinite_loop:
+
+                switch(x.getActiveTool()){
+                    case inheritance:
+                    case unit_tests:
+                        return new_pos;
+                }
+
+                if(count_players_new_place >= 1){
+                    this.updatePlayersState("Em Jogo", new_pos);
+                }
+
+                x.setEstado("Blocked");
+
+                return new_pos;
+            case core_dumped:
+
+                switch(x.getActiveTool()){
+                    case functional:
+                        return new_pos;
+                }
+
+                if(count_players_new_place >= 1){
+                    this.updatePlayersPlace(new_pos,-3);
+                    return new_pos - 3;
+                }
+
+                return new_pos;
+
+
+        }
+
+        return new_pos;
     }
 
     public boolean gameIsOver(){

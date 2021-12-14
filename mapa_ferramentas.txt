@@ -1,0 +1,21 @@
+Heranca
+    Ciclo Infinito
+    Segmentation fault
+Programacao funcional
+    Erro de sintaxe
+    Crash
+Testes unitarios
+    Ciclo infinito
+    Efeitos secundarios
+Tratamento de excepcoes
+    Segmentation fault
+    Blue Screen of Death
+IDE
+    Duplicated code
+    Exception
+
+Ajuda Professor
+    Erro de sintaxe
+    Erro de logica
+    Exception
+    File not found
