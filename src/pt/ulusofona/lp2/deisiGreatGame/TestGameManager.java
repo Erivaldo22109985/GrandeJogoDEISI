@@ -34,7 +34,7 @@ public class TestGameManager {
         int i = 0;
         //abismo
         this.abyssesTools[i][0] = "0";
-        this.abyssesTools[i][1] = Integer.toString(Abysses.sintax.ordinal());
+        this.abyssesTools[i][1] = Integer.toString(Abysses.syntax.ordinal());
         this.abyssesTools[i][2] = "3";
 
         i++;

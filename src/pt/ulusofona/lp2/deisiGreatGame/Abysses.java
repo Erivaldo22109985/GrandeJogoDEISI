@@ -1,7 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 public enum Abysses {
-    sintax,
+    syntax,
     logic,
     exception,
     file_not_found_exception,

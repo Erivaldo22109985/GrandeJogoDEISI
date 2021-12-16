@@ -11,12 +11,12 @@ public class Programmer implements Comparable{
     private String[] linguagens;
     private int pos, pos_ant;
     private String estado;
-    private Tools activeTool;
+    private ArrayList<Tools> activeTools;
 
     public Programmer(int id, String name, String color, String linguagens){
         this.id = id;
         this.name = name;
-        this.activeTool = null;
+        this.activeTools = new ArrayList<Tools>();
 
         switch(color){
 
@@ -46,12 +46,24 @@ public class Programmer implements Comparable{
         return this.id;
     }
 
-    public Tools getActiveTool(){
-        return this.activeTool;
+    public ArrayList<Tools> getActiveTools(){
+
+        return this.activeTools;
+    }
+
+    public boolean hasAtLeastOneTool(Tools t[]){
+
+        for (int i= 0; i < t.length; i++){
+            if(this.activeTools.contains(t[i]) == true){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setActiveTool(Tools t){
-        this.activeTool = t;
+        if(this.activeTools.contains(t) == false)
+            this.activeTools.add(t);
     }
     public int getPos(){
 
@@ -99,11 +111,29 @@ public class Programmer implements Comparable{
         return ret;
     }
 
+    private String ferramentasToString(){
+        String ret = "";
 
+        if(this.linguagens.length == 0)
+            return "No tools";
+
+        for(int i = 0; i < this.linguagens.length; i++){
+
+            if(i==0){
+                ret = this.linguagens[i];
+            }else{
+                ret = ';' + this.linguagens[i];
+            }
+        }
+
+        return ret;
+
+    }
     @Override
     public String toString(){
         return Integer.toString(this.id) + " | "
                 + this.name + " | " + Integer.toString(this.pos) +
+                " | " + this.ferramentasToString() +
                 " | " + this.linguagensToString() + " | " +
                 this.estado;
 
