@@ -89,12 +89,7 @@ public class GameManager {
         return true;
     }
 
-    public String reactToAbyssOrTool(){
-        if(this.at_msg.compareTo("") == 0)
-            return null;
-        else
-            return this.at_msg;
-    }
+
     public String getImagePng(int position){
         if(position >= this.boardSize || position < 0){
             return null;
@@ -158,12 +153,11 @@ public class GameManager {
 
         Programmer x = this.jogadores.get(this.currentPlayer);
 
-        if(x.getEstado() == "Blocked"){
+        if(x.getEstado() == "Blocked" || x.getEstado() == "BSOD"){
             this.at_msg = "Bloqueado!!";
             return false;
         }
 
-        this.at_msg = "";
 
         if(x.getPos()+nrPositions < this.boardSize) {
             prox_casa = x.getPos() + nrPositions;
@@ -171,22 +165,37 @@ public class GameManager {
             prox_casa = this.boardSize - (nrPositions - (this.boardSize - x.getPos()) );
         }
 
+        x.setNewPos(prox_casa);
+
+        return true;
+    }
+
+    public String reactToAbyssOrTool(){
+        Programmer x = this.jogadores.get(this.currentPlayer);
+        int casa_atual = x.getPos();
+        int prox_casa = x.getNewPos();
+
+        this.at_msg = null;
+
         if(this.at.isAbysse(prox_casa) == true){
-            prox_casa = this.playAbysse(prox_casa,x);
+             prox_casa = this.playAbysse(prox_casa,x);
         }else if(this.at.isTool(prox_casa) == true){
             x.setActiveTool(Tools.values()[at.getATPosition(prox_casa)[1]]);
+            this.at_msg = "Apanhada ferramenta: " + Tools.values()[at.getATPosition(prox_casa)[1]];
         }
-
         x.setPos(prox_casa);
 
         this.currentPlayer++;this.nturnos++;
         if(this.currentPlayer>=this.jogadores.size()){
+            for(int i=0; i<this.jogadores.size();i++){
+                if(this.jogadores.get(i).getEstado() != "BSOD"){
+                    this.currentPlayer = i;
+                }
+            }
             this.currentPlayer=0;
-
         }
 
-
-        return true;
+        return this.at_msg;
     }
 
     private int countPlayersSamePlace(int pos){
