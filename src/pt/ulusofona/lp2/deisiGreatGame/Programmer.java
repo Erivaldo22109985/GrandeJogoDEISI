@@ -9,7 +9,7 @@ public class Programmer implements Comparable{
     private String name;
     private ProgrammerColor color;
     private String[] linguagens;
-    private int pos, pos_ant;
+    private int pos, pos_ant, pos_new;
     private String estado;
     private ArrayList<Tools> activeTools;
 
@@ -39,6 +39,7 @@ public class Programmer implements Comparable{
 
         this.pos = 1;
         this.pos_ant = 1;
+        this.pos_new = 1;
         this.estado = "Em Jogo";
     }
 
@@ -81,13 +82,24 @@ public class Programmer implements Comparable{
         this.estado = n;
     }
     public void setPos(int pos){
+
         this.pos_ant = this.pos;
 
-        if(pos <= 0)
+
+        if(pos <= 0) {
             pos = 1;
+        }
 
         this.pos = pos;
 
+    }
+
+    public void setNewPos(int pos){
+        this.pos_new = pos;
+    }
+
+    public int getNewPos(){
+        return this.pos_new;
     }
 
     public String getName(){
