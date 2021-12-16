@@ -81,8 +81,10 @@ public class TestGameManager {
         assertTrue(this.gm.createInitialBoard(this.list_player_1,12));
 
         assertTrue(this.gm.moveCurrentPlayer(1));
+        assertTrue(this.gm.reactToAbyssOrTool() == null);
 
         assertTrue(this.gm.moveCurrentPlayer(3));
+        assertTrue(this.gm.reactToAbyssOrTool() == null);
 
         assertEquals(this.gm.getCurrentPlayerID(),10);
     }
