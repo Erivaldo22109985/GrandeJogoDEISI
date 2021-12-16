@@ -12,7 +12,7 @@ public class GameManager {
     private int currentPlayer;
     private int nturnos;
     private AbyssesAndTools at;
-    private String at_msg = null;
+    private String atMsg = null;
 
     public GameManager(){
     }
@@ -24,15 +24,15 @@ public class GameManager {
     public boolean createInitialBoard(String[][] playerInfo,
                                       int boardSize,
                                       String[][] abyssesAndTools
-                                      ){
+                                      ) {
         //Verificacao de numero jogadores
-        if (playerInfo.length < 2 || playerInfo.length > 4){
+        if (playerInfo.length < 2 || playerInfo.length > 4) {
             return false;
         }
 
 
         //Verificacao do tabuleiro tamanho
-        if (boardSize < playerInfo.length*2) {
+        if (boardSize < playerInfo.length * 2) {
             return false;
         }
 
@@ -41,7 +41,7 @@ public class GameManager {
         this.currentPlayer = 0;
         this.nturnos = 1;
 
-        for(int i=0;i<playerInfo.length;i++){
+        for (int i = 0; i < playerInfo.length; i++) {
             int id_jogador = Integer.parseInt(playerInfo[i][0]);
             String nome = playerInfo[i][1];
             String lista_linguagens = playerInfo[i][2];
@@ -52,10 +52,10 @@ public class GameManager {
                 return false;
             }
 
-            for(int j=0;j<playerInfo.length;j++){
+            for (int j = 0; j < playerInfo.length; j++) {
 
                 //ids programadores repetidos
-                if (j != i && Integer.parseInt(playerInfo[j][0]) == id_jogador){
+                if (j != i && Integer.parseInt(playerInfo[j][0]) == id_jogador) {
                     return false;
                 }
 
@@ -66,7 +66,7 @@ public class GameManager {
             }
 
             //os nomes dos porgramadaores
-            if(nome == null||nome == "") {
+            if (nome == null || nome == "") {
                 return false;
             }
 
@@ -76,14 +76,14 @@ public class GameManager {
             }
 
             //Adicionar jogador
-            this.jogadores.add( new Programmer(id_jogador,nome,cor,lista_linguagens) );
+            this.jogadores.add(new Programmer(id_jogador, nome, cor, lista_linguagens));
         }
 
 
         this.at = new AbyssesAndTools();
-        if(this.at.init(abyssesAndTools,boardSize) == false)
+        if (this.at.init(abyssesAndTools, boardSize) == false){
             return false;
-
+    }
         Collections.sort(this.jogadores);
 
         return true;
@@ -116,12 +116,13 @@ public class GameManager {
     public List<Programmer> getProgrammers(boolean includeDefeated){
         ArrayList<Programmer> ret = new ArrayList<Programmer>();
 
-        if(includeDefeated == true)
+        if(includeDefeated == true) {
             return this.getProgrammers();
-
+        }
         for(Programmer x : this.jogadores){
-            if(x.getEstado() != "Derrotado" && x.getEstado() != "BSOD")
+            if(x.getEstado() != "Derrotado" && x.getEstado() != "BSOD") {
                 ret.add(x);
+            }
         }
 
         return ret;
@@ -154,7 +155,7 @@ public class GameManager {
         Programmer x = this.jogadores.get(this.currentPlayer);
 
         if(x.getEstado() == "Blocked" || x.getEstado() == "BSOD"){
-            this.at_msg = "Bloqueado!!";
+            this.atMsg = "Bloqueado!!";
             return false;
         }
 
@@ -175,13 +176,13 @@ public class GameManager {
         int casa_atual = x.getPos();
         int prox_casa = x.getNewPos();
 
-        this.at_msg = null;
+        this.atMsg = null;
 
         if(this.at.isAbysse(prox_casa) == true){
              prox_casa = this.playAbysse(prox_casa,x);
         }else if(this.at.isTool(prox_casa) == true){
             x.setActiveTool(Tools.values()[at.getATPosition(prox_casa)[1]]);
-            this.at_msg = "Apanhada ferramenta: " + Tools.values()[at.getATPosition(prox_casa)[1]];
+            this.atMsg = "Apanhada ferramenta: " + Tools.values()[at.getATPosition(prox_casa)[1]];
         }
         x.setPos(prox_casa);
 
@@ -195,14 +196,15 @@ public class GameManager {
             this.currentPlayer=0;
         }
 
-        return this.at_msg;
+        return this.atMsg;
     }
 
     private int countPlayersSamePlace(int pos){
         int n = 0;
         for(Programmer x: this.getProgrammers()){
-            if(x.getPos() == pos)
+            if(x.getPos() == pos) {
                 n++;
+            }
         }
 
         return n;
@@ -211,8 +213,9 @@ public class GameManager {
     private void updatePlayersState(String estado, int pos){
         int n = 0;
         for(Programmer x: this.getProgrammers()){
-            if(x.getPos() == pos)
+            if(x.getPos() == pos) {
                 x.setEstado(estado);
+            }
         }
 
     }
@@ -230,107 +233,107 @@ public class GameManager {
 
     public int playAbysse(int new_pos, Programmer x){
         int at_pos = x.getPos();
-        int ant_pos = x.getPos_ant();
+        int ant_pos = x.getPosAnt();
         int numDado = new_pos - at_pos;
         int count_players_same_place = this.countPlayersSamePlace(at_pos);
         int count_players_new_place = this.countPlayersSamePlace(new_pos);
 
         //no caso de nao estar em jogo
-        if(at_pos <= 0 || x.getEstado().equals("Blocked") == true)
+        if(at_pos <= 0 || x.getEstado().equals("Blocked") == true) {
             return at_pos;
-
+        }
 
         //posicao nova
         switch(Abysses.values()[at.getATPosition(new_pos)[1]]){
             case syntax:
 
-                this.at_msg = "Abismo de Sintaxe. Anda uma posicao para traz!";
+                this.atMsg = "Abismo de Sintaxe. Anda uma posicao para traz!";
                 if(x.hasAtLeastOneTool(
                         new Tools[]{
                                 Tools.ajuda_professor,
                                 Tools.functional
                         }) == true){
-                        this.at_msg += "\nSalvo por ferramenta!";
+                        this.atMsg += "\nSalvo por ferramenta!";
                         return new_pos;
                 }
 
                 return new_pos - 1;
             case logic:
-                this.at_msg = "Abismo de logica. Anda " + numDado/2 + " para traz!";
+                this.atMsg = "Abismo de logica. Anda " + numDado/2 + " para traz!";
                 if(x.hasAtLeastOneTool(
                         new Tools[]{
                                 Tools.ajuda_professor
                         }) == true){
-                        this.at_msg += "\nSalvo por ferramenta!";
+                        this.atMsg += "\nSalvo por ferramenta!";
                         return new_pos;
                 }
 
                 return new_pos - numDado/2;
             case exception:
-                this.at_msg = "Abismo de excecao. Anda para traz 2 posicoes!";
+                this.atMsg = "Abismo de excecao. Anda para traz 2 posicoes!";
                 if(x.hasAtLeastOneTool(
                         new Tools[]{
                                 Tools.ajuda_professor,
                                 Tools.IDE
                         }) == true){
-                        this.at_msg += "\nSalvo por ferramenta";
+                        this.atMsg += "\nSalvo por ferramenta";
                         return new_pos;
                 }
 
                 return new_pos - 2;
             case file_not_found_exception:
-                this.at_msg = "Abismo de File Not Found. Anda para traz 3 posicoes!";
+                this.atMsg = "Abismo de File Not Found. Anda para traz 3 posicoes!";
                 if(x.hasAtLeastOneTool(
                         new Tools[]{
                                 Tools.ajuda_professor
                         }) == true){
-                        this.at_msg += "\nSalvo por ferramenta";
+                        this.atMsg += "\nSalvo por ferramenta";
                         return new_pos;
                 }
 
 
                 return new_pos - 3;
             case crash:
-                this.at_msg = "Abismo de Crash. Volta para casa inicial!";
+                this.atMsg = "Abismo de Crash. Volta para casa inicial!";
                 if(x.hasAtLeastOneTool(
                         new Tools[]{
                                 Tools.functional
                         }) == true){
-                        this.at_msg += "\nSalvo por ferramenta";
+                        this.atMsg += "\nSalvo por ferramenta";
                         return new_pos;
                 }
 
                 return 1;
             case duplicated_code:
-                this.at_msg = "Abismo de Duplicated code. Volta para casa de onde jogou!";
+                this.atMsg = "Abismo de Duplicated code. Volta para casa de onde jogou!";
                 if(x.hasAtLeastOneTool(
                         new Tools[]{
                                 Tools.IDE
                         }) == true){
-                        this.at_msg += "\nSalvo por ferramenta";
+                        this.atMsg += "\nSalvo por ferramenta";
                         return new_pos;
                 }
 
                 return at_pos;
             case secondary_effects:
-                this.at_msg = "Abismo de Efeitos Secundarios. Volta para a casa de duas jogadas atras!";
+                this.atMsg = "Abismo de Efeitos Secundarios. Volta para a casa de duas jogadas atras!";
                 if(x.hasAtLeastOneTool(
                         new Tools[]{
                                 Tools.unit_tests
                         }) == true){
-                        this.at_msg += "\nSalvo por ferramenta";
+                        this.atMsg += "\nSalvo por ferramenta";
                         return new_pos;
                 }
 
                 return ant_pos;
             case bsod:
 
-                this.at_msg = "Abismo de BSOD. Perdeu o Jogo!";
+                this.atMsg = "Abismo de BSOD. Perdeu o Jogo!";
                 if(x.hasAtLeastOneTool(
                         new Tools[]{
                                 Tools.catch0
                         }) == true){
-                    this.at_msg += "\nSalvo por ferramenta";
+                    this.atMsg += "\nSalvo por ferramenta";
                         return new_pos;
                 }
 
@@ -338,13 +341,13 @@ public class GameManager {
 
                 return 0;
             case infinite_loop:
-                this.at_msg = "Abismo de Loop infinito. Bloqueado ate outro programador jogar!";
+                this.atMsg = "Abismo de Loop infinito. Bloqueado ate outro programador jogar!";
                 if(x.hasAtLeastOneTool(
                         new Tools[]{
                                 Tools.inheritance,
                                 Tools.unit_tests
                         }) == true){
-                        this.at_msg = "\nSalvo por ferramenta";
+                        this.atMsg = "\nSalvo por ferramenta";
                         return new_pos;
                 }
 
@@ -356,21 +359,21 @@ public class GameManager {
 
                 return new_pos;
             case core_dumped:
-                this.at_msg = "Abismo Core Dumped.";
+                this.atMsg = "Abismo Core Dumped.";
                 if(x.hasAtLeastOneTool(
                         new Tools[]{
                                 Tools.functional
                         }) == true){
-                        this.at_msg += "\nSalvo por ferramenta";
+                        this.atMsg += "\nSalvo por ferramenta";
                         return new_pos;
                 }
 
                 if(count_players_new_place >= 1){
-                    this.at_msg += "\nTodos os programadores nesta casa perdem 3 casas!";
+                    this.atMsg += "\nTodos os programadores nesta casa perdem 3 casas!";
                     this.updatePlayersPlace(new_pos,-3);
                     return new_pos - 3;
                 }else{
-                    this.at_msg += "\nNada acontece";
+                    this.atMsg += "\nNada acontece";
                 }
 
                 return new_pos;

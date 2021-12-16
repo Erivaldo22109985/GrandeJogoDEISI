@@ -9,7 +9,7 @@ public class Programmer implements Comparable{
     private String name;
     private ProgrammerColor color;
     private String[] linguagens;
-    private int pos, pos_ant, pos_new;
+    private int pos, posAnt, posNew;
     private String estado;
     private ArrayList<Tools> activeTools;
 
@@ -38,8 +38,8 @@ public class Programmer implements Comparable{
         Arrays.sort(this.linguagens);
 
         this.pos = 1;
-        this.pos_ant = 1;
-        this.pos_new = 1;
+        this.posAnt = 1;
+        this.posNew = 1;
         this.estado = "Em Jogo";
     }
 
@@ -63,16 +63,17 @@ public class Programmer implements Comparable{
     }
 
     public void setActiveTool(Tools t){
-        if(this.activeTools.contains(t) == false)
+        if(this.activeTools.contains(t) == false) {
             this.activeTools.add(t);
+        }
     }
     public int getPos(){
 
         return this.pos;
     }
 
-    public int getPos_ant(){
-        return this.pos_ant;
+    public int getPosAnt(){
+        return this.posAnt;
     }
 
     public String getEstado(){
@@ -83,7 +84,7 @@ public class Programmer implements Comparable{
     }
     public void setPos(int pos){
 
-        this.pos_ant = this.pos;
+        this.posAnt = this.pos;
 
 
         if(pos <= 0) {
@@ -95,11 +96,11 @@ public class Programmer implements Comparable{
     }
 
     public void setNewPos(int pos){
-        this.pos_new = pos;
+        this.posNew = pos;
     }
 
     public int getNewPos(){
-        return this.pos_new;
+        return this.posNew;
     }
 
     public String getName(){
@@ -126,8 +127,9 @@ public class Programmer implements Comparable{
     private String ferramentasToString(){
         String ret = "";
 
-        if(this.linguagens.length == 0)
+        if(this.linguagens.length == 0) {
             return "No tools";
+        }
 
         for(int i = 0; i < this.linguagens.length; i++){
 

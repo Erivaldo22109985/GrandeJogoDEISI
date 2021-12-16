@@ -33,9 +33,9 @@ public class AbyssesAndTools {
     public String getTitle(int position){
         int at[] = this.getATPosition(position);
 
-        if(at == null)
+        if(at == null) {
             return null;
-
+        }
         switch(at[0]){
             case 0:
                 String titles[] = {
@@ -72,9 +72,9 @@ public class AbyssesAndTools {
 
     private boolean isSomething(int pos, int type){
         int [] x;
-        if((x = this.getATPosition(pos)) == null || x[0] != type)
+        if((x = this.getATPosition(pos)) == null || x[0] != type) {
             return false;
-
+        }
         return true;
     }
     public boolean isAbysse(int pos){
@@ -87,12 +87,13 @@ public class AbyssesAndTools {
 
     public int[] getATPosition(int pos){
 
-        if(this.at == null)
+        if(this.at == null) {
             return null;
-
+        }
         for(int i = 0; i<this.at.length; i++){
-            if(at[i][2] == pos)
+            if(at[i][2] == pos) {
                 return at[i];
+            }
         }
 
         return null;
@@ -100,8 +101,9 @@ public class AbyssesAndTools {
 
     public boolean init(String [][] abyssesAndTools, int boardsize){
 
-        if(abyssesAndTools == null)
+        if(abyssesAndTools == null) {
             return true;
+        }
 
         at = new int[abyssesAndTools.length][3];
 
