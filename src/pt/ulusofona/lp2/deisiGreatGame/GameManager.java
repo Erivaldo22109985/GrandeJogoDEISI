@@ -426,7 +426,7 @@ public class GameManager {
         return false;
     }
 
-    public ArrayList<String> getGameResults(){
+    public List<String> getGameResults(){
         ArrayList<String> ret = new ArrayList<String>();
 
         if(this.gameIsOver() == false){
@@ -443,11 +443,11 @@ public class GameManager {
         ret.add("");
         ret.add("RESTANTES");
 
-        int pos = 2;
+        //int pos = 2;
         for(int i = this.boardSize-1; i>= 0; i--){
             for(Programmer x: this.getProgrammers(i)){
-                ret.add(x.getName() + " " + Integer.toString(pos));
-                pos++;
+                ret.add(x.getName() + " " + Integer.toString(x.getPos()));
+                //pos++;
             }
         }
 
