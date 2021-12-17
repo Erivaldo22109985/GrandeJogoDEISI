@@ -77,14 +77,17 @@ public class Programmer implements Comparable{
     }
 
     public String getEstado(){
+
         return this.estado;
     }
     public void setEstado(String n){
         this.estado = n;
     }
-    public void setPos(int pos){
+    public void setPos(int pos, boolean updateAnt){
 
-        this.posAnt = this.pos;
+        if(updateAnt == true){
+            this.posAnt = this.pos;
+        }
 
 
         if(pos <= 0) {

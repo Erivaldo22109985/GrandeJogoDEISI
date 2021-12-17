@@ -187,15 +187,20 @@ public class GameManager {
             prox_casa = this.boardSize - (nrPositions - (this.boardSize - x.getPos()) );
         }
 
-        x.setNewPos(prox_casa);
+        x.setNewPos(x.getPos());
+        x.setPos(prox_casa,false);
+
 
         return true;
     }
 
     public String reactToAbyssOrTool(){
         Programmer x = this.jogadores.get(this.currentPlayer);
-        int casa_atual = x.getPos();
-        int prox_casa = x.getNewPos();
+        int casa_atual = x.getNewPos();
+        int prox_casa = x.getPos();
+
+        x.setPos(casa_atual,false);
+        x.setNewPos(prox_casa);
 
         this.atMsg = null;
 
