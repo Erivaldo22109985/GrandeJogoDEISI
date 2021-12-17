@@ -210,7 +210,7 @@ public class GameManager {
             x.setActiveTool(Tools.values()[at.getATPosition(prox_casa)[1]]);
             this.atMsg = "Apanhada ferramenta: " + Tools.values()[at.getATPosition(prox_casa)[1]];
         }
-        x.setPos(prox_casa);
+        x.setPos(prox_casa,true);
 
         this.currentPlayer++;this.nturnos++;
         if(this.currentPlayer>=this.jogadores.size()){
@@ -251,7 +251,7 @@ public class GameManager {
         for(Programmer x: this.getProgrammers()){
             if(x.getPos() == pos)
             {
-                x.setPos(pos + n_casas);
+                x.setPos(pos + n_casas,true);
             }
         }
 
