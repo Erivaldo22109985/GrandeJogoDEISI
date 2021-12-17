@@ -111,7 +111,28 @@ public class GameManager {
     }
 
     public String getProgrammersInfo(){
-        return "asdas";
+        String ret = "";
+        for(Programmer x: this.getProgrammers()){
+            ret += x.getName() + " : ";
+
+            if(x.getActiveTools().size() == 0){
+                ret += "No tools";
+            }else{
+                int i = 0;
+                for(Tools k: x.getActiveTools()){
+                    if(i == 0){
+                        ret += k.name();
+                    }else{
+                        ret += ";" + k.name();
+                    }
+                    i++;
+                }
+            }
+
+            ret += " | ";
+        }
+
+        return ret;
     }
     public List<Programmer> getProgrammers(boolean includeDefeated){
         ArrayList<Programmer> ret = new ArrayList<Programmer>();

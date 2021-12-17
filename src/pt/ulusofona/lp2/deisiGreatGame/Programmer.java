@@ -127,16 +127,16 @@ public class Programmer implements Comparable{
     private String ferramentasToString(){
         String ret = "";
 
-        if(this.linguagens.length == 0) {
+        if(this.activeTools.size() == 0) {
             return "No tools";
         }
 
-        for(int i = 0; i < this.linguagens.length; i++){
-
+        for(int i = 0; i < this.activeTools.size(); i++){
+            String mm = this.activeTools.get(i).name().replace("_","-").replace("0","");
             if(i==0){
-                ret = this.linguagens[i];
+                ret = mm;
             }else{
-                ret = ';' + this.linguagens[i];
+                ret = ';' + mm;
             }
         }
 
