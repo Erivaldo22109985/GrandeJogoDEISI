@@ -127,7 +127,7 @@ public class Programmer implements Comparable{
         return ret;
     }
 
-    private String ferramentasToString(){
+    public String ferramentasToString(){
         String ret = "";
 
         if(this.activeTools.size() == 0) {
