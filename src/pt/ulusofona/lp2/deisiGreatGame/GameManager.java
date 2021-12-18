@@ -287,7 +287,7 @@ public class GameManager {
             case syntax:
 
                 this.atMsg = "Abismo de Sintaxe. Anda uma posicao para traz!";
-                if(x.hasAtLeastOneTool(
+                if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
                                 Tools.ajuda_professor,
                                 Tools.functional
@@ -299,7 +299,7 @@ public class GameManager {
                 return new_pos - 1;
             case logic:
                 this.atMsg = "Abismo de logica. Anda " + numDado/2 + " para traz!";
-                if(x.hasAtLeastOneTool(
+                if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
                                 Tools.ajuda_professor
                         }) == true){
@@ -310,7 +310,7 @@ public class GameManager {
                 return (int) (new_pos - Math.floor( numDado/ 2));
             case exception:
                 this.atMsg = "Abismo de excecao. Anda para traz 2 posicoes!";
-                if(x.hasAtLeastOneTool(
+                if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
                                 Tools.ajuda_professor,
                                 Tools.IDE
@@ -322,7 +322,7 @@ public class GameManager {
                 return new_pos - 2;
             case file_not_found_exception:
                 this.atMsg = "Abismo de File Not Found. Anda para traz 3 posicoes!";
-                if(x.hasAtLeastOneTool(
+                if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
                                 Tools.ajuda_professor
                         }) == true){
@@ -334,7 +334,7 @@ public class GameManager {
                 return new_pos - 3;
             case crash:
                 this.atMsg = "Abismo de Crash. Volta para casa inicial!";
-                if(x.hasAtLeastOneTool(
+                if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
                                 Tools.functional
                         }) == true){
@@ -345,7 +345,7 @@ public class GameManager {
                 return 1;
             case duplicated_code:
                 this.atMsg = "Abismo de Duplicated code. Volta para casa de onde jogou!";
-                if(x.hasAtLeastOneTool(
+                if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
                                 Tools.IDE
                         }) == true){
@@ -356,7 +356,7 @@ public class GameManager {
                 return at_pos;
             case secondary_effects:
                 this.atMsg = "Abismo de Efeitos Secundarios. Volta para a casa de duas jogadas atras!";
-                if(x.hasAtLeastOneTool(
+                if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
                                 Tools.unit_tests
                         }) == true){
@@ -368,7 +368,7 @@ public class GameManager {
             case bsod:
 
                 this.atMsg = "Abismo de BSOD. Perdeu o Jogo!";
-                if(x.hasAtLeastOneTool(
+                if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
                                 Tools.catch0
                         }) == true){
@@ -381,7 +381,7 @@ public class GameManager {
                 return new_pos;
             case infinite_loop:
                 this.atMsg = "Abismo de Loop infinito. Bloqueado ate outro programador jogar!";
-                if(x.hasAtLeastOneTool(
+                if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
                                 Tools.inheritance,
                                 Tools.unit_tests
@@ -399,7 +399,7 @@ public class GameManager {
                 return new_pos;
             case core_dumped:
                 this.atMsg = "Abismo Core Dumped.";
-                if(x.hasAtLeastOneTool(
+                if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
                                 Tools.functional
                         }) == true){

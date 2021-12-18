@@ -61,12 +61,16 @@ public class Programmer implements Comparable{
         this.blocked = block;
     }
 
-    public boolean hasAtLeastOneTool(Tools t[]){
+    public boolean hasAtLeastOneTool_andRemoveit(Tools t[]){
 
-        for (int i= 0; i < t.length; i++){
-            if(this.activeTools.contains(t[i]) == true){
-                return true;
-            }
+        for(int i = 0; i < this.activeTools.size(); i++){
+            for (int j= 0; j < t.length; j++){
+                if(this.activeTools.get(i) == t[j]){
+                    this.activeTools.remove(i);
+                    return true;
+                }
+        }
+
         }
         return false;
     }
