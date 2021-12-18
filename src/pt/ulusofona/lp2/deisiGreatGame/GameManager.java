@@ -146,14 +146,16 @@ public class GameManager {
         return ret;
     }
 
-    public List<Programmer> getProgrammers(int position){
-        ArrayList<Programmer> k = new ArrayList<Programmer>();
+    public List<ProgrammerSimple> getProgrammers(int position){
+        ArrayList<ProgrammerSimple> k = new ArrayList<ProgrammerSimple>();
 
         for(Programmer x : this.jogadores){
             if(x.getPos() == position) {
-                k.add(x);
+                k.add(new ProgrammerSimple(x.getName(),x.getPos()));
             }
         }
+
+        Collections.sort(k);
 
         return k;
     }
@@ -442,7 +444,7 @@ public class GameManager {
 
         //int pos = 2;
         for(int i = this.boardSize-1; i>= 0; i--){
-            for(Programmer x: this.getProgrammers(i)){
+            for(ProgrammerSimple x: this.getProgrammers(i)){
                 ret.add(x.getName() + " " + Integer.toString(x.getPos()));
                 //pos++;
             }
