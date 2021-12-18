@@ -208,6 +208,10 @@ public class GameManager {
         int casa_atual = x.getNewPos();
         int prox_casa = x.getPos();
 
+        if(x.getBlocked() == true|| x.getEstado() == "Derrotado"){
+            return null;
+        }
+
         x.setPos(casa_atual,false);
         x.setNewPos(prox_casa);
 
@@ -421,7 +425,9 @@ public class GameManager {
 
     public boolean gameIsOver(){
         if(this.getProgrammers(this.boardSize).size() >= 1){
+
             for(Programmer k : this.getProgrammers()){
+
                 if (k.getPos() != this.boardSize){
                     k.setEstado("Derrotado");
                 }
@@ -432,7 +438,14 @@ public class GameManager {
             return true;
         }
 
-        return false;
+
+        for(Programmer k : this.getProgrammers()){
+            if(k.getBlocked() == false && k.getEstado() != "Derrotado"){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public List<String> getGameResults(){
