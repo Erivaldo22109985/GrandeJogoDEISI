@@ -374,7 +374,7 @@ public class GameManager {
 
                 x.setEstado("Derrotado");
 
-                return 0;
+                return new_pos;
             case infinite_loop:
                 this.atMsg = "Abismo de Loop infinito. Bloqueado ate outro programador jogar!";
                 if(x.hasAtLeastOneTool(
