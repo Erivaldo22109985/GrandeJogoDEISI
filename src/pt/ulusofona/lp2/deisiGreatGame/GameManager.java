@@ -112,12 +112,16 @@ public class GameManager {
 
     public String getProgrammersInfo(){
         String ret = "";
-        for(Programmer x: this.getProgrammers()){
+        for(int i= 0; i < this.getProgrammers().size(); i++){
+            Programmer x = this.getProgrammers().get(i);
+
             ret += x.getName() + " : ";
 
             ret += x.ferramentasToString();
 
-            ret += " | ";
+            if( i != this.getProgrammers().size() - 1){
+                ret += " | ";
+            }
         }
 
         return ret;
