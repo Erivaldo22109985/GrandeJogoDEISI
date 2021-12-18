@@ -135,7 +135,28 @@ public class Programmer implements Comparable{
         }
 
         for(int i = 0; i < this.activeTools.size(); i++){
-            String mm = this.activeTools.get(i).name().replace("_","-").replace("0","");
+            String mm = "";
+            switch(this.activeTools.get(i)){
+                case inheritance:
+                    mm = "Herança";
+                    break;
+                case functional:
+                    mm = "Programação Funcional";
+                    break;
+                case unit_tests:
+                    mm = "Testes unitários";
+                    break;
+                case catch0:
+                    mm = "Tratamento de Excepções";
+                    break;
+                case IDE:
+                    mm = "IDE";
+                    break;
+                case ajuda_professor:
+                    mm = "Ajuda Do Professor";
+                    break;
+            }
+
             if(i==0){
                 ret = mm;
             }else{
