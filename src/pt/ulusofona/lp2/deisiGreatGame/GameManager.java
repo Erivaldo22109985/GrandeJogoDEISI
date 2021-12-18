@@ -212,7 +212,7 @@ public class GameManager {
         this.currentPlayer++;this.nturnos++;
         if(this.currentPlayer>=this.jogadores.size()){
             for(int i=0; i<this.jogadores.size();i++){
-                if(this.jogadores.get(i).getEstado() != "Derrotado"){
+                if(this.jogadores.get(i).getEstado() != "Derrotado" || this.jogadores.get(i).getBlocked() == false){
                     this.currentPlayer = i;
                 }
             }
