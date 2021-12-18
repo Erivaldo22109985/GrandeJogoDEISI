@@ -42,7 +42,12 @@ public class GameManager {
         this.nturnos = 1;
 
         for (int i = 0; i < playerInfo.length; i++) {
-            int id_jogador = Integer.parseInt(playerInfo[i][0]);
+            int id_jogador = -1;
+            try{
+                id_jogador = Integer.parseInt(playerInfo[i][0]);
+            }catch(Exception e)   {
+                return false;
+            }
             String nome = playerInfo[i][1];
             String lista_linguagens = playerInfo[i][2];
             String cor = playerInfo[i][3];

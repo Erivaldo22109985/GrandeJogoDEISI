@@ -131,12 +131,12 @@ public class AbyssesAndTools {
             //validacao das ferramentas e tipos
             switch(at[i][0]){
                 case 0:
-                    if(at[i][1] < 0 || at[i][1] > Abysses.values().length){
+                    if(at[i][1] < 0 || at[i][1] >= Abysses.values().length){
                         return false;
                     }
                     break;
                 case 1:
-                    if(at[i][1] < 0 || at[i][1] > Tools.values().length){
+                    if(at[i][1] < 0 || at[i][1] >= Tools.values().length){
                         return false;
                     }
                     break;
