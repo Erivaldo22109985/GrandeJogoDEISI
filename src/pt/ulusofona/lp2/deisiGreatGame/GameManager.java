@@ -163,7 +163,7 @@ public class GameManager {
 
         Programmer x = this.jogadores.get(this.currentPlayer);
 
-        if(x.getEstado() == "Blocked" || x.getEstado() == "Derrotado"){
+        if(x.getBlocked() == true|| x.getEstado() == "Derrotado"){
             this.atMsg = "Bloqueado!!";
             return false;
         }
@@ -224,11 +224,11 @@ public class GameManager {
         return n;
     }
 
-    private void updatePlayersState(String estado, int pos){
+    private void updatePlayersState(boolean estado, int pos){
         int n = 0;
         for(Programmer x: this.getProgrammers()){
             if(x.getPos() == pos) {
-                x.setEstado(estado);
+                x.setBlocked(estado);
             }
         }
 
@@ -253,7 +253,7 @@ public class GameManager {
         int count_players_new_place = this.countPlayersSamePlace(new_pos);
 
         //no caso de nao estar em jogo
-        if(at_pos <= 0 || x.getEstado().equals("Blocked") == true) {
+        if(at_pos <= 0 || x.getBlocked() == true) {
             return at_pos;
         }
 
@@ -366,10 +366,10 @@ public class GameManager {
                 }
 
                 if(count_players_new_place >= 1){
-                    this.updatePlayersState("Em Jogo", new_pos);
+                    this.updatePlayersState(false, new_pos);
                 }
 
-                x.setEstado("Blocked");
+                x.setBlocked(true);
 
                 return new_pos;
             case core_dumped:

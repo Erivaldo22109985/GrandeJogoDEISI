@@ -12,6 +12,7 @@ public class Programmer implements Comparable{
     private int pos, posAnt, posNew;
     private String estado;
     private ArrayList<Tools> activeTools;
+    private boolean blocked = false;
 
     public Programmer(int id, String name, String color, String linguagens){
         this.id = id;
@@ -50,6 +51,14 @@ public class Programmer implements Comparable{
     public ArrayList<Tools> getActiveTools(){
 
         return this.activeTools;
+    }
+
+    public boolean getBlocked(){
+        return this.blocked;
+    }
+
+    public void setBlocked(boolean block){
+        this.blocked = block;
     }
 
     public boolean hasAtLeastOneTool(Tools t[]){
