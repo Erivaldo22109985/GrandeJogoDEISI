@@ -141,7 +141,7 @@ public class GameManager {
             return this.getProgrammers();
         }
         for(Programmer x : this.jogadores){
-            if(x.getEstado() != "Derrotado" && x.getEstado() != "BSOD") {
+            if(x.getEstado() != "Derrotado") {
                 ret.add(x);
             }
         }
@@ -175,7 +175,7 @@ public class GameManager {
 
         Programmer x = this.jogadores.get(this.currentPlayer);
 
-        if(x.getEstado() == "Blocked" || x.getEstado() == "BSOD"){
+        if(x.getEstado() == "Blocked" || x.getEstado() == "Derrotado"){
             this.atMsg = "Bloqueado!!";
             return false;
         }
@@ -215,7 +215,7 @@ public class GameManager {
         this.currentPlayer++;this.nturnos++;
         if(this.currentPlayer>=this.jogadores.size()){
             for(int i=0; i<this.jogadores.size();i++){
-                if(this.jogadores.get(i).getEstado() != "BSOD"){
+                if(this.jogadores.get(i).getEstado() != "Derrotado"){
                     this.currentPlayer = i;
                 }
             }
@@ -363,7 +363,7 @@ public class GameManager {
                         return new_pos;
                 }
 
-                x.setEstado("BSOD");
+                x.setEstado("Derrotado");
 
                 return 0;
             case infinite_loop:
