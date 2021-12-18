@@ -360,7 +360,7 @@ public class GameManager {
                 this.atMsg = "Abismo de Efeitos Secundarios. Volta para a casa de duas jogadas atras!";
                 if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
-                                Tools.unit_tests
+                                Tools.functional
                         }) == true){
                         this.atMsg += "\nSalvo por ferramenta";
                         return new_pos;
