@@ -290,7 +290,7 @@ public class GameManager {
                 if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
                                 Tools.ajuda_professor,
-                                Tools.functional
+                                Tools.IDE
                         }) == true){
                         this.atMsg += "\nSalvo por ferramenta!";
                         return new_pos;
@@ -301,7 +301,8 @@ public class GameManager {
                 this.atMsg = "Abismo de logica. Anda " + numDado/2 + " para traz!";
                 if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
-                                Tools.ajuda_professor
+                                Tools.ajuda_professor,
+                                Tools.unit_tests
                         }) == true){
                         this.atMsg += "\nSalvo por ferramenta!";
                         return new_pos;
@@ -312,8 +313,8 @@ public class GameManager {
                 this.atMsg = "Abismo de excecao. Anda para traz 2 posicoes!";
                 if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
-                                Tools.ajuda_professor,
-                                Tools.IDE
+                                Tools.catch0,
+                                Tools.ajuda_professor
                         }) == true){
                         this.atMsg += "\nSalvo por ferramenta";
                         return new_pos;
@@ -324,6 +325,7 @@ public class GameManager {
                 this.atMsg = "Abismo de File Not Found. Anda para traz 3 posicoes!";
                 if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
+                                Tools.catch0,
                                 Tools.ajuda_professor
                         }) == true){
                         this.atMsg += "\nSalvo por ferramenta";
@@ -347,7 +349,7 @@ public class GameManager {
                 this.atMsg = "Abismo de Duplicated code. Volta para casa de onde jogou!";
                 if(x.hasAtLeastOneTool_andRemoveit(
                         new Tools[]{
-                                Tools.IDE
+                                Tools.inheritance
                         }) == true){
                         this.atMsg += "\nSalvo por ferramenta";
                         return new_pos;

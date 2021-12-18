@@ -88,4 +88,66 @@ public class TestGameManager {
 
         assertEquals(this.gm.getCurrentPlayerID(),10);
     }
+
+    @org.junit.Test
+    public void testPosicao() {
+        String[][] playerInfo = new String[2][4];
+
+        playerInfo[0][0] = "1";
+        playerInfo[0][1] = "Anabela";
+        playerInfo[0][2] = "Java;Kotlin";
+        playerInfo[0][3] = "Purple";
+        playerInfo[1][0] = "2";
+        playerInfo[1][1] = "Carlos";
+        playerInfo[1][2] = "C;Kotlin";
+        playerInfo[1][3] = "Blue";
+
+        String[][] abyssesAndTools = new String[2][3];
+
+        abyssesAndTools[0][0] = "1";
+        abyssesAndTools[0][1] = "5";
+        abyssesAndTools[0][2] = "2";
+
+        abyssesAndTools[1][0] = "0";
+        abyssesAndTools[1][1] = "0";
+        abyssesAndTools[1][2] = "5";
+
+        GameManager game = new GameManager();
+
+        game.createInitialBoard(playerInfo, 90, abyssesAndTools);
+        System.out.println("Id jogador : " + game.getCurrentPlayerID());
+        System.out.println(game.moveCurrentPlayer(2));
+        System.out.println(game.reactToAbyssOrTool());
+        System.out.println(game.moveCurrentPlayer(1));
+        System.out.println(game.reactToAbyssOrTool());
+        System.out.println(game.moveCurrentPlayer(2));
+        System.out.println(game.reactToAbyssOrTool());
+
+        System.out.println(game.getProgrammers().toString());
+        System.out.println("-------------------------------------------------------------");
+
+        System.out.println("Id jogador : " + game.getCurrentPlayerID());
+        System.out.println(game.moveCurrentPlayer(3));
+        System.out.println(game.reactToAbyssOrTool());
+
+        System.out.println("-------------------------------------------------------------");
+        System.out.println("Id jogador : " + game.getCurrentPlayerID());
+        System.out.println(game.moveCurrentPlayer(2));
+        System.out.println(game.reactToAbyssOrTool());
+
+
+        System.out.println("-------------------------------------------------------------");
+        System.out.println("Id jogador (se for 1 não deve jogar) : " + game.getCurrentPlayerID());
+        System.out.println(game.moveCurrentPlayer(3));
+        System.out.println(game.reactToAbyssOrTool());
+        ;
+
+        System.out.println("-------------------------------------------------------------");
+        System.out.println("Id jogador (deve jogar o id2) : " + game.getCurrentPlayerID());
+        System.out.println(game.moveCurrentPlayer(3));
+        System.out.println(game.reactToAbyssOrTool());
+
+    }
+
+
 }
