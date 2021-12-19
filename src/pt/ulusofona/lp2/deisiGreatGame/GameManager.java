@@ -21,6 +21,7 @@ public class GameManager {
                                       int boardSize){
         return this.createInitialBoard(playerInfo,boardSize,null);
     }
+
     public boolean createInitialBoard(String[][] playerInfo,
                                       int boardSize,
                                       String[][] abyssesAndTools
