@@ -308,7 +308,10 @@ public class GameManager {
                         return new_pos;
                 }
 
-                return (int) (new_pos - Math.floor( numDado/ 2));
+                if(numDado == 1){
+                    numDado = 2;
+                }
+                return (int) Math.floor(new_pos - ( numDado/ 2));
             case exception:
                 this.atMsg = "Abismo de excecao. Anda para traz 2 posicoes!";
                 if(x.hasAtLeastOneTool_andRemoveit(
