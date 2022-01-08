@@ -1,9 +1,10 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Programmer implements Comparable{
+public class Programmer implements Comparable, Serializable {
 
     private int id;
     private String name;

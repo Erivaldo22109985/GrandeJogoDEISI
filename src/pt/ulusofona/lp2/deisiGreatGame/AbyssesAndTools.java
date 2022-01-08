@@ -1,6 +1,8 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-public class AbyssesAndTools {
+import java.io.Serializable;
+
+public class AbyssesAndTools implements Serializable {
 
     int at[][];
 
@@ -99,10 +101,11 @@ public class AbyssesAndTools {
         return null;
     }
 
-    public boolean init(String [][] abyssesAndTools, int boardsize){
+    public void init(String [][] abyssesAndTools, int boardsize) throws InvalidInitialBoardException
+    {
 
         if(abyssesAndTools == null) {
-            return true;
+            throw new InvalidInitialBoardException("Abysses and tools null");
         }
 
         at = new int[abyssesAndTools.length][3];
@@ -111,7 +114,7 @@ public class AbyssesAndTools {
         for(int i=0;i<abyssesAndTools.length;i++){
 
             if(abyssesAndTools[i].length != 3){
-                return false;
+                throw new InvalidInitialBoardException("Abysses and tools length");
             }
 
             try{
@@ -119,36 +122,48 @@ public class AbyssesAndTools {
                 at[i][1] = Integer.parseInt(abyssesAndTools[i][1]); // tipo
                 at[i][2] = Integer.parseInt(abyssesAndTools[i][2]); // Posicao
             }catch(Exception e){
-                return false;
+                throw new InvalidInitialBoardException("Abysses and tools parsing");
             }
 
             //validacao do tipo
             if (!( at[i][0] == 0 || at[i][0] == 1)
             ) {
-                return false;
+                throw new InvalidInitialBoardException("Abysses and tools type");
             }
 
             //validacao das ferramentas e tipos
             switch(at[i][0]){
                 case 0:
                     if(at[i][1] < 0 || at[i][1] >= Abysses.values().length){
-                        return false;
+
+                        throw new InvalidInitialBoardException(
+                                "Abyss type out of boundaries","Abyss",
+                                Integer.toString(at[i][1])
+                        );
                     }
                     break;
                 case 1:
                     if(at[i][1] < 0 || at[i][1] >= Tools.values().length){
-                        return false;
+                        throw new InvalidInitialBoardException(
+                                "Tools type out of boundaries",
+                                "Tool",
+                                Integer.toString(at[i][1])
+                        );
                     }
                     break;
             }
 
             //Verificar se esta dentro dos limites do board size
             if(at[i][2] < 0 && at[i][2] >= boardsize - 1){
-                return false;
+                throw new InvalidInitialBoardException(
+                        "Tools type out of boundaries",
+                        at[i][0],
+                        Integer.toString(at[i][1])
+                );
             }
 
         }
 
-        return true;
     }
+
 }

@@ -1,11 +1,12 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class GameManager {
+public class GameManager implements Serializable {
 
     private ArrayList<Programmer> jogadores;
     private int boardSize;
@@ -17,24 +18,25 @@ public class GameManager {
     public GameManager(){
     }
 
-    public boolean createInitialBoard(String[][] playerInfo,
-                                      int boardSize){
-        return this.createInitialBoard(playerInfo,boardSize,null);
+    public void createInitialBoard(String[][] playerInfo,
+                                      int boardSize) throws InvalidInitialBoardException
+    {
+        this.createInitialBoard(playerInfo,boardSize,null);
     }
 
-    public boolean createInitialBoard(String[][] playerInfo,
+    public void createInitialBoard(String[][] playerInfo,
                                       int boardSize,
                                       String[][] abyssesAndTools
-                                      ) {
+                                      ) throws InvalidInitialBoardException{
         //Verificacao de numero jogadores
         if (playerInfo.length < 2 || playerInfo.length > 4) {
-            return false;
+            throw new InvalidInitialBoardException("Player Info Length");
         }
 
 
         //Verificacao do tabuleiro tamanho
         if (boardSize < playerInfo.length * 2) {
-            return false;
+            throw new InvalidInitialBoardException("Boadsize limits");
         }
 
         this.jogadores = new ArrayList<Programmer>();
@@ -47,7 +49,7 @@ public class GameManager {
             try{
                 id_jogador = Integer.parseInt(playerInfo[i][0]);
             }catch(Exception e)   {
-                return false;
+                throw new InvalidInitialBoardException("ID jogador");
             }
             String nome = playerInfo[i][1];
             String lista_linguagens = playerInfo[i][2];
@@ -55,30 +57,30 @@ public class GameManager {
 
             //id numero inteiro positivo
             if (id_jogador < 0) {
-                return false;
+                throw new InvalidInitialBoardException("ID jogador lower than 0");
             }
 
             for (int j = 0; j < playerInfo.length; j++) {
 
                 //ids programadores repetidos
                 if (j != i && Integer.parseInt(playerInfo[j][0]) == id_jogador) {
-                    return false;
+                    throw new InvalidInitialBoardException("Programmers IDs same");
                 }
 
                 //Nao podem haver cores iguais
                 if (j != i && playerInfo[j][3] == cor) {
-                    return false;
+                    throw new InvalidInitialBoardException("Same colours");
                 }
             }
 
             //os nomes dos porgramadaores
             if (nome == null || nome == "") {
-                return false;
+                throw new InvalidInitialBoardException("Programmer names");
             }
 
             //cor dos jogadores
             if (cor != "Purple" && cor != "Green" && cor != "Brown" && cor != "Blue") {
-                return false;
+                throw new InvalidInitialBoardException("Player Colours");
             }
 
             //Adicionar jogador
@@ -87,12 +89,9 @@ public class GameManager {
 
 
         this.at = new AbyssesAndTools();
-        if (this.at.init(abyssesAndTools, boardSize) == false){
-            return false;
-    }
-        Collections.sort(this.jogadores);
+        this.at.init(abyssesAndTools, boardSize);
 
-        return true;
+        Collections.sort(this.jogadores);
     }
 
 
@@ -175,6 +174,9 @@ public class GameManager {
         return this.jogadores.get(this.currentPlayer).getId();
     }
 
+    public int getCurrentPlayer(){
+        return this.currentPlayer;
+    }
 
     public boolean moveCurrentPlayer(int nrPositions){
         int prox_casa = 0;
@@ -485,6 +487,62 @@ public class GameManager {
 
     public JPanel getAuthorsPanel(){
         return null;
+    }
+
+    public boolean saveGame(File file){
+        try{
+            FileOutputStream f = new FileOutputStream(file);
+            ObjectOutputStream o = new ObjectOutputStream(f);
+
+            o.writeObject(this);
+
+            o.close();
+            f.close();
+
+        }catch (Exception e){
+            return false;
+        }
+
+        return true;
+    }
+
+    public int getBoardSize(){
+        return this.boardSize;
+    }
+    public int getNturnos(){
+        return this.nturnos;
+    }
+
+    public AbyssesAndTools getAt(){
+        return this.at;
+    }
+
+    public String getAtMsg(){
+        return this.atMsg;
+    }
+    public void loadGame(GameManager g){
+        this.jogadores = (ArrayList<Programmer>) g.getProgrammers();
+        this.boardSize = g.getBoardSize();
+        this.currentPlayer = g.getCurrentPlayer();
+        this.nturnos = g.getNturnos();
+        this.at = g.getAt();
+        this.atMsg = g.getAtMsg();
+    }
+    public boolean loadGame(File file){
+        try{
+            FileInputStream f = new FileInputStream(file);
+            ObjectInputStream o = new ObjectInputStream(f);
+
+            this.loadGame((GameManager) o.readObject());
+
+            o.close();
+            f.close();
+
+        }catch (Exception e){
+            return false;
+        }
+
+        return true;
     }
 
 }

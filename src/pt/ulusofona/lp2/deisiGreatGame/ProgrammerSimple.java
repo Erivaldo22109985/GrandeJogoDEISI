@@ -1,6 +1,8 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-public class ProgrammerSimple implements Comparable{
+import java.io.Serializable;
+
+public class ProgrammerSimple implements Comparable, Serializable {
 
     private String name;
     private int pos;

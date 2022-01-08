@@ -59,15 +59,21 @@ public class TestGameManager {
 
     @org.junit.Test
     public void createInitialBoard() {
-        assertTrue(this.gm.createInitialBoard(this.list_player_1,16, this.abyssesTools));
-
+        try {
+            this.gm.createInitialBoard(this.list_player_1, 16, this.abyssesTools);
+        }catch(Exception e){
+            fail();
+        }
 
     }
 
     @org.junit.Test
     public void moveCurrentPlayer() {
-        assertTrue(this.gm.createInitialBoard(this.list_player_1,13));
-
+        try {
+            this.gm.createInitialBoard(this.list_player_1, 13);
+        }catch(Exception e){
+            fail();
+        }
         assertTrue(this.gm.moveCurrentPlayer(6));
         assertTrue(this.gm.reactToAbyssOrTool() == null);
 
@@ -91,16 +97,22 @@ public class TestGameManager {
         this.abyssesTools[1][1] = Integer.toString(a.ordinal());
         this.abyssesTools[0][1] = Integer.toString(t.ordinal());
 
-        assertTrue(this.gm.createInitialBoard(this.list_player_1,16, this.abyssesTools));
-
+        try {
+            this.gm.createInitialBoard(this.list_player_1, 16, this.abyssesTools);
+        }catch(Exception e){
+            fail();
+        }
         assertTrue(this.gm.moveCurrentPlayer(2));
         assertTrue(this.gm.reactToAbyssOrTool() != null);
 
         if(a != Abysses.bsod && a != Abysses.infinite_loop && a != Abysses.core_dumped){
             assertTrue(this.gm.getProgrammers(3).size() == 0);
         }
-        assertTrue(this.gm.createInitialBoard(this.list_player_1,16, this.abyssesTools));
-
+        try{
+            this.gm.createInitialBoard(this.list_player_1,16, this.abyssesTools);
+        }catch(Exception e){
+            fail();
+        }
         assertTrue(this.gm.moveCurrentPlayer(1));
         assertTrue(this.gm.reactToAbyssOrTool() != null);
 
