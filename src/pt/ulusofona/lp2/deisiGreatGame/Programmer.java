@@ -90,6 +90,9 @@ public class Programmer implements Comparable, Serializable {
         return this.posAnt;
     }
 
+    public String getFirstName(){
+        return this.name.split(" ")[0];
+    }
     public String getEstado(){
 
         return this.estado;

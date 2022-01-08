@@ -24,5 +24,21 @@ fun lercomando(type: CommandType) : ((GameManager, List<String>) -> String?)? {
 
 
 fun get(g: GameManager, l: List<String>): String?{
-    return "OK!";
+    var arg = l.get(0);
+    when(arg){
+        "PLAYER" -> return get_player(g,l);
+    }
+    return null;
+}
+
+fun get_player(g: GameManager, l: List<String>): String?{
+    var ret:String = "Inexistent player";
+    g.getProgrammers(true).forEach {
+        if(it.firstName == l.get(1)){
+            ret = it.toString();
+            return@forEach
+        }
+    }
+
+    return ret;
 }
