@@ -2,9 +2,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class GameManager implements Serializable {
 
@@ -14,6 +12,8 @@ public class GameManager implements Serializable {
     private int nturnos;
     private AbyssesAndTools at;
     private String atMsg = null;
+    private HashMap<Integer,Integer> boardCountHistory;
+    private HashMap<Abysses,Integer> abyssesCountHistory;
 
     public GameManager(){
     }
@@ -23,6 +23,7 @@ public class GameManager implements Serializable {
     {
         this.createInitialBoard(playerInfo,boardSize,null);
     }
+
 
     public void createInitialBoard(String[][] playerInfo,
                                       int boardSize,
@@ -41,6 +42,16 @@ public class GameManager implements Serializable {
 
         this.jogadores = new ArrayList<Programmer>();
         this.boardSize = boardSize;
+        this.boardCountHistory = new HashMap<>();
+        for(int i = 2; i< this.boardSize - 2; i++){
+            this.boardCountHistory.put(i,0);
+        }
+
+        this.abyssesCountHistory = new HashMap<>();
+        for(int i = 0; i< Abysses.values().length; i++){
+            this.abyssesCountHistory.put(Abysses.values()[i],0);
+        }
+
         this.currentPlayer = 0;
         this.nturnos = 1;
 
@@ -94,6 +105,37 @@ public class GameManager implements Serializable {
         Collections.sort(this.jogadores);
     }
 
+    public List<Map.Entry<Integer,Integer>> getBoardCountHistory(){
+        List<Map.Entry<Integer,Integer>> l =
+                new LinkedList<Map.Entry<Integer,Integer>> (this.boardCountHistory.entrySet());
+
+        Collections.sort(l, new Comparator<Map.Entry<Integer,Integer>>(){
+            public int compare(Map.Entry<Integer, Integer> o1,
+                               Map.Entry<Integer, Integer> o2)
+            {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+                }
+
+        );
+        return l;
+    }
+
+    public List<Map.Entry<Abysses,Integer>> getAbyssesCountHistory(){
+        List<Map.Entry<Abysses,Integer>> l =
+                new LinkedList<Map.Entry<Abysses,Integer>> (this.abyssesCountHistory.entrySet());
+
+        Collections.sort(l, new Comparator<Map.Entry<Abysses,Integer>>(){
+                    public int compare(Map.Entry<Abysses, Integer> o1,
+                                       Map.Entry<Abysses, Integer> o2)
+                    {
+                        return (o2.getValue()).compareTo(o1.getValue());
+                    }
+                }
+
+        );
+        return l;
+    }
 
     public String getImagePng(int position){
         if(position >= this.boardSize || position < 0){
@@ -201,10 +243,12 @@ public class GameManager implements Serializable {
 
         x.setNewPos(x.getPos());
         x.setPos(prox_casa,false);
-
+        this.boardCountHistory.put(prox_casa,this.boardCountHistory.get(prox_casa) + 1);
 
         return true;
     }
+
+
 
     public String reactToAbyssOrTool(){
         Programmer x = this.jogadores.get(this.currentPlayer);
@@ -221,6 +265,7 @@ public class GameManager implements Serializable {
         this.atMsg = null;
 
         if(this.at.isAbysse(prox_casa) == true){
+             this.abyssesCountHistory.put(this.at.getAbysse(prox_casa), 1 + this.abyssesCountHistory.get(this.at.getAbysse(prox_casa)));
              prox_casa = this.playAbysse(prox_casa,x);
         }else if(this.at.isTool(prox_casa) == true){
             x.setActiveTool(Tools.values()[at.getATPosition(prox_casa)[1]]);

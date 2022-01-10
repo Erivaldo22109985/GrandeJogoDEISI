@@ -79,6 +79,11 @@ public class AbyssesAndTools implements Serializable {
         }
         return true;
     }
+
+    public Abysses getAbysse(int pos){
+        return Abysses.values()[this.getATPosition(pos)[1]];
+    }
+
     public boolean isAbysse(int pos){
         return this.isSomething(pos,0);
     }
