@@ -17,13 +17,27 @@ fun router():  (CommandType) -> ((GameManager, List<String>) -> String?)? {
 fun lercomando(type: CommandType) : ((GameManager, List<String>) -> String?)? {
     when(type){
         CommandType.GET -> return ::get;
+        CommandType.POST -> return ::post;
     }
 
     return null;
 }
 
+fun post(g: GameManager, l: List<String>): String?{
+
+    if (l.size < 1) return null;
+
+    var arg = l.get(0);
+    when(arg){
+        "MOVE" -> return post_moveplayer(g,l);
+        "ABYSS" -> return post_addAbyss(g,l);
+    }
+    return null;
+}
 
 fun get(g: GameManager, l: List<String>): String?{
+    if (l.size < 1) return null;
+
     var arg = l.get(0);
     when(arg){
         "PLAYER" -> return get_player(g,l);
@@ -58,8 +72,44 @@ fun polyglots(p: MutableList<Programmer>): String{
     return res;
 }
 
+fun post_moveplayer(g: GameManager, l: List<String>): String?{
+    var ret:String? = "FAIL";
+    if(l.size != 2) return null;
+
+    var k:Int = Integer.parseInt(l.get(1));
+
+    if( g.moveCurrentPlayer(k) == true ){
+        ret = g.reactToAbyssOrTool();
+        if(ret == null){
+            ret = "OK";
+        }
+    }
+
+
+    return ret;
+}
+
+fun post_addAbyss(g: GameManager, l: List<String>): String?{
+    var ret:String? = "FAIL";
+    if(l.size != 3) return null;
+
+    var abyssTypeID:Int = Integer.parseInt(l.get(1));
+    var position:Int = Integer.parseInt(l.get(2));
+
+    if(g.at.addAbyss(position,Abysses.values()[abyssTypeID]) == true) {
+        ret = "OK";
+    }
+    else{
+        ret = "Position is occupied";
+    }
+
+    return ret;
+}
 
 fun get_mostUsedAbysses(g: GameManager, l: List<String>): String?{
+
+    if(l.size != 2) return null;
+
     var k:Int = Integer.parseInt(l.get(1));
     var ret:String = "";
 
@@ -75,6 +125,8 @@ fun get_mostUsedAbysses(g: GameManager, l: List<String>): String?{
 }
 
 fun get_mostUsedPositions(g: GameManager, l: List<String>): String?{
+    if(l.size != 2) return null;
+
     var k:Int = Integer.parseInt(l.get(1));
     var ret:String = "";
 
@@ -106,6 +158,8 @@ fun get_polyglots(g: GameManager, l: List<String>): String?{
 }
 
 fun get_player_by_language(g: GameManager, l: List<String>): String?{
+    if(l.size != 2) return null;
+
     val x = l.get(1);
     var ret:String? = null;
 
@@ -128,6 +182,8 @@ fun get_player_by_language(g: GameManager, l: List<String>): String?{
     return ret;
 }
 fun get_player(g: GameManager, l: List<String>): String?{
+    if(l.size != 2) return null;
+
     var ret:String = "Inexistent player";
     g.getProgrammers(true).forEach {
         if(it.firstName == l.get(1)){

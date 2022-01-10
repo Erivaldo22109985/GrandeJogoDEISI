@@ -84,6 +84,29 @@ public class AbyssesAndTools implements Serializable {
         return Abysses.values()[this.getATPosition(pos)[1]];
     }
 
+    public boolean addAbyss(int pos, Abysses a){
+        int tmp[][] = at;
+
+        if(this.getATPosition(pos) != null) {
+            return false;
+        }
+
+
+        this.at = new int[tmp.length+1][3];
+
+        for(int i=0;i<tmp.length;i++){
+            this.at[i][0] = tmp[i][0];
+            this.at[i][1] = tmp[i][1];
+            this.at[i][2] = tmp[i][2];
+        }
+
+        this.at[tmp.length ][0] = 0;
+        this.at[tmp.length ][1] = a.ordinal();
+        this.at[tmp.length ][2] = pos;
+
+        return true;
+    }
+
     public boolean isAbysse(int pos){
         return this.isSomething(pos,0);
     }
