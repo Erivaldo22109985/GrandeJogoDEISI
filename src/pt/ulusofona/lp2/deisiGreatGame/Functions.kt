@@ -1,7 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame
 
-import sun.security.util.Debug.println
-
+import java.util.*
+import java.util.regex.Pattern
 
 enum class CommandType{
     GET,
@@ -27,19 +27,68 @@ fun get(g: GameManager, l: List<String>): String?{
     var arg = l.get(0);
     when(arg){
         "PLAYER" -> return get_player(g,l);
-        "PLAYERS_BY_LANGUAGE" -> get_player_by_language(g,l);
+        "PLAYERS_BY_LANGUAGE" -> return get_player_by_language(g,l);
+        "POLYGLOTS" -> return get_polyglots(g,l);
     }
     return null;
 }
-fun get_player_by_language(g: GameManager, l: List<String>): String?{
-    val x = l.get(1);
-    val k = "dwq";
-    var ret:String = "";
 
-    k.split("," , ignorecase= true, limit=0);
+
+fun polyglots(p: MutableList<Programmer>): String{
+    var res:String = "";
+    when(p.size){
+        0 -> return "";
+        1 -> return p.get(0).name + ":" + p.get(0).linguagens.size + "\n";
+        else -> {
+            var tmp:Programmer = p.get(0);
+            p.removeAt(0);
+            if(tmp.linguagens.size > p.get(0).linguagens.size){
+                res = polyglots(p)  + tmp.name + ":" + tmp.linguagens.size + "\n";
+            }else{
+                res = tmp.name + ":" + tmp.linguagens.size + "\n" + polyglots(p);
+            }
+
+            p.add(tmp);
+        }
+    }
+
+    return res;
+}
+
+fun get_polyglots(g: GameManager, l: List<String>): String?{
+    var ret:String? = null;
+    val ob:MutableList<Programmer> = ArrayList<Programmer>();
 
     g.getProgrammers(true).forEach {
+        val p:Programmer = it;
+        if(p.linguagens.size > 1){
+            ob.add(p);
+        }
+    }
 
+    ret = polyglots(ob);
+
+    return ret;
+}
+
+fun get_player_by_language(g: GameManager, l: List<String>): String?{
+    val x = l.get(1);
+    var ret:String? = null;
+
+    g.getProgrammers(true).forEach {
+        val p:Programmer = it;
+        Pattern.compile(";").split(x).iterator().forEachRemaining {
+            val c:String = it;
+            p.linguagens.iterator().forEachRemaining {
+                if(c == it ){
+                    if(ret == null){
+                        ret = p.name;
+                    }else{
+                        ret = ret + "," + p.name;
+                    }
+                }
+            }
+        }
     }
 
     return ret;

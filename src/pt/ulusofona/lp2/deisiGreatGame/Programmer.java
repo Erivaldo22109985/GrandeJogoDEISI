@@ -45,6 +45,10 @@ public class Programmer implements Comparable, Serializable {
         this.estado = "Em Jogo";
     }
 
+    public String[ ] getLinguagens(){
+        return this.linguagens;
+    }
+
     public int getId(){
         return this.id;
     }
