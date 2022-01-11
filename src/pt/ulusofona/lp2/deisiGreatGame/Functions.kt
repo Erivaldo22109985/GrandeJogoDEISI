@@ -142,9 +142,9 @@ fun get_mostUsedPositions(g: GameManager, l: List<String>): String?{
 }
 
 fun get_polyglots(g: GameManager, l: List<String>): String?{
-    var ret:String? = null;
-    val ob:MutableList<Programmer> = ArrayList<Programmer>();
-
+    var ret:String? = "";
+    val ob:ArrayList<Programmer> = ArrayList<Programmer>();
+    var first = true;
     g.getProgrammers(true).forEach {
         val p:Programmer = it;
         if(p.linguagens.size > 1){
@@ -152,9 +152,17 @@ fun get_polyglots(g: GameManager, l: List<String>): String?{
         }
     }
 
-    ret = polyglots(ob);
-    ret = g.replaceEmptyLines(ret);
+    //ret = polyglots(ob);
+    //ret = g.replaceEmptyLines(ret);
+    g.sortProgrammerBynLanguage(ob).forEach {
+        if(first == true){
+            ret = it.name + ":" + it.linguagens.size;
+            first = false;
+        }else{
+            ret = ret + "\n" + it.name + ":" + it.linguagens.size;
+        }
 
+    }
     return ret;
 }
 

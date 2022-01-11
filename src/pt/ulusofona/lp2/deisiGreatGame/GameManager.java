@@ -139,6 +139,26 @@ public class GameManager implements Serializable {
         return l;
     }
 
+    public ArrayList<Programmer> sortProgrammerBynLanguage(ArrayList<Programmer> l){
+
+        Collections.sort(l, new Comparator<Programmer>(){
+                    public int compare(Programmer o1,
+                                       Programmer o2)
+                    {
+                         if(o2.getLinguagens().length == o1.getLinguagens().length){
+                             return 0;
+                         }
+                        if(o2.getLinguagens().length < o1.getLinguagens().length){
+                            return 1;
+                        }
+                        return -1;
+                    }
+                }
+
+        );
+        return l;
+    }
+
     public String getImagePng(int position){
         if(position >= this.boardSize || position < 0){
             return null;
@@ -272,8 +292,10 @@ public class GameManager implements Serializable {
         this.atMsg = null;
 
         if(this.at.isAbysse(prox_casa) == true){
-             this.abyssesCountHistory.put(this.at.getAbysse(prox_casa), 1 + this.abyssesCountHistory.get(this.at.getAbysse(prox_casa)));
-             prox_casa = this.playAbysse(prox_casa,x);
+            if(this.abyssesCountHistory != null  && this.abyssesCountHistory.containsKey(this.at.getAbysse(prox_casa)) == true) {
+                this.abyssesCountHistory.put(this.at.getAbysse(prox_casa), 1 + this.abyssesCountHistory.get(this.at.getAbysse(prox_casa)));
+            }
+            prox_casa = this.playAbysse(prox_casa, x);
         }else if(this.at.isTool(prox_casa) == true){
             x.setActiveTool(Tools.values()[at.getATPosition(prox_casa)[1]]);
             this.atMsg = "Apanhada ferramenta: " + Tools.values()[at.getATPosition(prox_casa)[1]];
