@@ -43,7 +43,7 @@ public class GameManager implements Serializable {
         this.jogadores = new ArrayList<Programmer>();
         this.boardSize = boardSize;
         this.boardCountHistory = new HashMap<>();
-        for(int i = 2; i< this.boardSize - 2; i++){
+        for(int i = 1; i<= this.boardSize; i++){
             this.boardCountHistory.put(i,0);
         }
 

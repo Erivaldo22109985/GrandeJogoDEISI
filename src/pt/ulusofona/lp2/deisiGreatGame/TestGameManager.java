@@ -70,7 +70,7 @@ public class TestGameManager {
     @org.junit.Test
     public void moveCurrentPlayer() {
         try {
-            this.gm.createInitialBoard(this.list_player_1, 13);
+            this.gm.createInitialBoard(this.list_player_1, 13, new String[0][]);
         }catch(Exception e){
             fail();
         }
