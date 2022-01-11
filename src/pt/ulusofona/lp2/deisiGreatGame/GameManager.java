@@ -245,13 +245,13 @@ public class GameManager implements Serializable {
 
         x.setNewPos(x.getPos());
         x.setPos(prox_casa,false);
-
-        if(this.boardCountHistory.containsKey(prox_casa) == true) {
-            this.boardCountHistory.put(prox_casa, this.boardCountHistory.get(prox_casa) + 1);
-        }else{
-            this.boardCountHistory.put(prox_casa, 1);
+        if(this.boardCountHistory != null) {
+            if (this.boardCountHistory.containsKey(prox_casa) == true) {
+                this.boardCountHistory.put(prox_casa, this.boardCountHistory.get(prox_casa) + 1);
+            } else {
+                this.boardCountHistory.put(prox_casa, 1);
+            }
         }
-
         return true;
     }
 
@@ -294,7 +294,7 @@ public class GameManager implements Serializable {
     }
 
     public String replaceEmptyLines(String in){
-        return in.replaceAll("(?m)^[ \t]*\r?\n","");
+        return in.trim();
     }
 
     private int countPlayersSamePlace(int pos){

@@ -159,10 +159,10 @@ fun get_polyglots(g: GameManager, l: List<String>): String?{
 }
 
 fun get_player_by_language(g: GameManager, l: List<String>): String?{
-    if(l.size != 2) return null;
+    if(l.size != 2) return "";
 
     val x = l.get(1);
-    var ret:String? = null;
+    var ret:String? = "";
 
     g.getProgrammers(true).forEach {
         val p:Programmer = it;
