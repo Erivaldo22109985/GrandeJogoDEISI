@@ -153,6 +153,7 @@ fun get_polyglots(g: GameManager, l: List<String>): String?{
     }
 
     ret = polyglots(ob);
+    ret = g.replaceEmptyLines(ret);
 
     return ret;
 }

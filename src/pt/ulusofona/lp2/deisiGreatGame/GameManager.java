@@ -293,6 +293,10 @@ public class GameManager implements Serializable {
         return this.atMsg;
     }
 
+    public String replaceEmptyLines(String in){
+        return in.replaceAll("(?m)^[ \t]*\r?\n","");
+    }
+
     private int countPlayersSamePlace(int pos){
         int n = 0;
         for(Programmer x: this.getProgrammers()){
