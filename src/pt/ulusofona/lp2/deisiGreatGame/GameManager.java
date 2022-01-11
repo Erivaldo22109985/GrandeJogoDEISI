@@ -19,16 +19,18 @@ public class GameManager implements Serializable {
     }
 
     public void createInitialBoard(String[][] playerInfo,
-                                      int boardSize) throws InvalidInitialBoardException
+                                      int worldSize) throws InvalidInitialBoardException
     {
-        this.createInitialBoard(playerInfo,boardSize,null);
+        this.createInitialBoard(playerInfo,worldSize,null);
     }
 
 
     public void createInitialBoard(String[][] playerInfo,
-                                      int boardSize,
+                                      int worldSize,
                                       String[][] abyssesAndTools
                                       ) throws InvalidInitialBoardException{
+        int boardSize = worldSize;
+
         //Verificacao de numero jogadores
         if (playerInfo.length < 2 || playerInfo.length > 4) {
             throw new InvalidInitialBoardException("Player Info Length");
@@ -177,7 +179,7 @@ public class GameManager implements Serializable {
         ArrayList<Programmer> ret = new ArrayList<Programmer>();
 
         if(includeDefeated == true) {
-            return this.getProgrammers();
+            return this.getProgrammers() == null ? ret : this.getProgrammers();
         }
         for(Programmer x : this.jogadores){
             if(x.getEstado() != "Derrotado") {

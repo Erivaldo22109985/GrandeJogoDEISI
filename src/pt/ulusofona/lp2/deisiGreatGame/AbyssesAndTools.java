@@ -133,7 +133,7 @@ public class AbyssesAndTools implements Serializable {
     {
 
         if(abyssesAndTools == null) {
-            throw new InvalidInitialBoardException("Abysses and tools null");
+            abyssesAndTools = new String[0][];
         }
 
         at = new int[abyssesAndTools.length][3];
