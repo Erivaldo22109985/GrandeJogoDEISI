@@ -245,7 +245,12 @@ public class GameManager implements Serializable {
 
         x.setNewPos(x.getPos());
         x.setPos(prox_casa,false);
-        this.boardCountHistory.put(prox_casa,this.boardCountHistory.get(prox_casa) + 1);
+
+        if(this.boardCountHistory.containsKey(prox_casa) == true) {
+            this.boardCountHistory.put(prox_casa, this.boardCountHistory.get(prox_casa) + 1);
+        }else{
+            this.boardCountHistory.put(prox_casa, 1);
+        }
 
         return true;
     }
